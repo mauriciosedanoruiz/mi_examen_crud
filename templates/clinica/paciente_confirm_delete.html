@@ -1,0 +1,14 @@
+{% extends "clinica/base.html" %}
+
+{% block content %}
+    <h2>Eliminar Paciente</h2>
+    <p>¿Estás seguro de que deseas eliminar al paciente <strong>{{ paciente.nombre }} {{ paciente.apellido }}</strong>?</p>
+    
+    <p style="font-style: italic;">Esta acción es permanente.</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" style="background-color: red; color: white;">Confirmar Eliminación</button>
+        <a href="{% url 'paciente_detail' pk=paciente.pk %}">Cancelar</a>
+    </form>
+{% endblock %}

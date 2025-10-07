@@ -1,0 +1,27 @@
+{% extends "clinica/base.html" %}
+
+{% block content %}
+    <h2>Detalle del Paciente: {{ paciente.nombre }} {{ paciente.apellido }}</h2>
+
+    {% if paciente.foto %}
+        <img src="{{ paciente.foto.url }}" alt="{{ paciente.nombre }}" class="detail-img">
+    {% endif %}
+
+    <p><strong>Nombre:</strong> {{ paciente.nombre }}</p>
+    <p><strong>Apellido:</strong> {{ paciente.apellido }}</p>
+    <p><strong>Edad:</strong> {{ paciente.edad }} años</p>
+    <p><strong>Médico Asignado:</strong> 
+        <a href="{% url 'medico_detail' pk=paciente.medico.pk %}">
+            Dr(a). {{ paciente.medico.nombre }} {{ paciente.medico.apellido }} ({{ paciente.medico.especialidad }})
+        </a>
+    </p>
+    
+    <h3>Historial Clínico:</h3>
+    <p>{{ paciente.historial|linebreaksbr }}</p>
+
+    <p>
+        <a href="{% url 'paciente_update' pk=paciente.pk %}">Editar Paciente</a> | 
+        <a href="{% url 'paciente_delete' pk=paciente.pk %}">Eliminar Paciente</a> |
+        <a href="{% url 'paciente_list' %}">Volver al Listado</a>
+    </p>
+{% endblock %}

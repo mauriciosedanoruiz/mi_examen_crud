@@ -1,0 +1,19 @@
+{% extends "clinica/base.html" %}
+
+{% block content %}
+    <h2>{{ accion }}</h2>
+    
+    <form method="post" enctype="multipart/form-data"> 
+        {% csrf_token %}
+        
+        {{ form.as_p }} 
+        
+        {% if form.instance.foto %}
+            <p><strong>Foto actual:</strong></p>
+            <img src="{{ form.instance.foto.url }}" width="100" alt="{{ form.instance.nombre }}" class="detail-img">
+        {% endif %}
+
+        <button type="submit">Guardar</button>
+        <a href="{% url 'paciente_list' %}">Cancelar</a>
+    </form>
+{% endblock %}

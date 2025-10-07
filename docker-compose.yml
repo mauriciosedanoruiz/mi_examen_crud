@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  # Servicio de la aplicación Django
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app  # Monta el directorio local en el contenedor para ver cambios en tiempo real
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      # Pasa estas variables a settings.py (Configuración de la DB de Django)
+      - DATABASE_HOST=db
+      - DATABASE_NAME=bd_medico_paciente
+      - DATABASE_USER=root
+      - DATABASE_PASSWORD=pass_segura # ¡Importante! Cambia esto a tu contraseña
+
+  # Servicio de la Base de Datos MySQL
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      # Configuración de la DB de MySQL
+      MYSQL_DATABASE: bd_medico_paciente
+      MYSQL_ROOT_PASSWORD: pass_segura # Debe coincidir con DATABASE_PASSWORD
+    volumes:
+      - db_data:/var/lib/mysql # Persistencia de datos
+
+volumes:
+  db_data:

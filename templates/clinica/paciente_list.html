@@ -1,0 +1,41 @@
+{% extends "clinica/base.html" %}
+{% block content %}
+    <h2>Listado de Pacientes ({{ pacientes|length }})</h2>
+
+    <table class="list-table">
+        <thead>
+            <tr>
+                <th>Foto</th>
+                <th>Nombre Completo</th>
+                <th>Edad</th>
+                <th>Médico Asignado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for paciente in pacientes %}
+            <tr>
+                <td>
+                    {% if paciente.foto %}
+                        <img src="{{ paciente.foto.url }}" alt="{{ paciente.nombre }}" class="img-thumb">
+                    {% else %}
+                        [Sin Foto]
+                    {% endif %}
+                </td>
+                <td><a href="{% url 'paciente_detail' pk=paciente.pk %}">{{ paciente.nombre }} {{ paciente.apellido }}</a></td>
+                <td>{{ paciente.edad }}</td>
+                <td><a href="{% url 'medico_detail' pk=paciente.medico.pk %}">{{ paciente.medico.nombre }} {{ paciente.medico.apellido }}</a></td>
+                <td>
+                    <a href="{% url 'paciente_detail' pk=paciente.pk %}">Ver</a> | 
+                    <a href="{% url 'paciente_update' pk=paciente.pk %}">Editar</a> | 
+                    <a href="{% url 'paciente_delete' pk=paciente.pk %}">Eliminar</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">No hay pacientes registrados.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

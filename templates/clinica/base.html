@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examen CRUD - {{ title|default:"Clínica Médica" }}</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        nav a { margin-right: 15px; text-decoration: none; font-weight: bold; }
+        .list-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        .list-table th, .list-table td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        .img-thumb { width: 50px; height: 50px; object-fit: cover; border-radius: 50%; }
+        .detail-img { max-width: 250px; height: auto; margin-bottom: 20px; border: 1px solid #ccc; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Gestión de Médicos y Pacientes</h1>
+        <nav>
+            <a href="{% url 'medico_list' %}">🧑‍⚕️ Médicos</a> | 
+            <a href="{% url 'paciente_list' %}">🤕 Pacientes</a> | 
+            <a href="{% url 'medico_create' %}">➕ Nuevo Médico</a> |
+            <a href="{% url 'paciente_create' %}">➕ Nuevo Paciente</a>
+        </nav>
+        <hr>
+    </header>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+    <footer>
+        <hr>
+        <p>Examen de {{ request.user.username|default:"Usuario" }}</p>
+    </footer>
+</body>
+</html>

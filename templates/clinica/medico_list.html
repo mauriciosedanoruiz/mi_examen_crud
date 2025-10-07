@@ -1,0 +1,42 @@
+{% extends "clinica/base.html" %}
+
+{% block content %}
+    <h2>Listado de Médicos ({{ medicos|length }})</h2>
+
+    <table class="list-table">
+        <thead>
+            <tr>
+                <th>Foto</th>
+                <th>Nombre Completo</th>
+                <th>Especialidad</th>
+                <th>Pacientes</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for medico in medicos %}
+            <tr>
+                <td>
+                    {% if medico.foto %}
+                        <img src="{{ medico.foto.url }}" alt="{{ medico.nombre }}" class="img-thumb">
+                    {% else %}
+                        [Sin Foto]
+                    {% endif %}
+                </td>
+                <td><a href="{% url 'medico_detail' pk=medico.pk %}">{{ medico.nombre }} {{ medico.apellido }}</a></td>
+                <td>{{ medico.especialidad }}</td>
+                <td>{{ medico.num_pacientes }}</td>
+                <td>
+                    <a href="{% url 'medico_detail' pk=medico.pk %}">Ver</a> | 
+                    <a href="{% url 'medico_update' pk=medico.pk %}">Editar</a> | 
+                    <a href="{% url 'medico_delete' pk=medico.pk %}">Eliminar</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">No hay médicos registrados.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

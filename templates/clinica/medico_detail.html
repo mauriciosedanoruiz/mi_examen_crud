@@ -1,0 +1,29 @@
+{% extends "clinica/base.html" %}
+
+{% block content %}
+    <h2>Detalle del Médico: {{ medico.nombre }} {{ medico.apellido }}</h2>
+
+    {% if medico.foto %}
+        <img src="{{ medico.foto.url }}" alt="{{ medico.nombre }}" class="detail-img">
+    {% endif %}
+
+    <p><strong>Nombre:</strong> {{ medico.nombre }}</p>
+    <p><strong>Apellido:</strong> {{ medico.apellido }}</p>
+    <p><strong>Especialidad:</strong> {{ medico.especialidad }}</p>
+    <p><strong>Teléfono:</strong> {{ medico.telefono|default:"N/A" }}</p>
+
+    <h3>Pacientes a cargo ({{ pacientes|length }})</h3>
+    <ul>
+        {% for paciente in pacientes %}
+            <li><a href="{% url 'paciente_detail' pk=paciente.pk %}">{{ paciente.nombre }} {{ paciente.apellido }} ({{ paciente.edad }} años)</a></li>
+        {% empty %}
+            <li>Este médico no tiene pacientes asignados.</li>
+        {% endfor %}
+    </ul>
+
+    <p>
+        <a href="{% url 'medico_update' pk=medico.pk %}">Editar Médico</a> | 
+        <a href="{% url 'medico_delete' pk=medico.pk %}">Eliminar Médico</a> |
+        <a href="{% url 'medico_list' %}">Volver al Listado</a>
+    </p>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "clinica/base.html" %}
+
+{% block content %}
+    <h2>Eliminar Médico</h2>
+    <p>¿Estás seguro de que deseas eliminar al Dr(a). <strong>{{ medico.nombre }} {{ medico.apellido }}</strong>?</p>
+    
+    {% if medico.paciente_set.count > 0 %}
+        <p style="color: red; font-weight: bold;">ADVERTENCIA: Se eliminarán {{ medico.paciente_set.count }} pacientes asociados.</p>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" style="background-color: red; color: white;">Confirmar Eliminación</button>
+        <a href="{% url 'medico_detail' pk=medico.pk %}">Cancelar</a>
+    </form>
+{% endblock %}
